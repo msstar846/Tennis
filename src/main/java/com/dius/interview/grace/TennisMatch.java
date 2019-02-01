@@ -3,6 +3,12 @@ package com.dius.interview.grace;
 public class TennisMatch implements Match {
 
     private static final String[] SCORE_DESC = {"0", "15", "30", "40"};
+    private static final int FOUR_POINTS = 4;
+    private static final int THREE_POINTS = 3;
+    private static final int TWO_POINTS = 2;
+    private static final int LOVE = 0;
+    private static final String DEUCE = "Deuce";
+    private static final String ADVANTAGE = "Advantage ";
 
     private Player playerOne;
     private Player playerTwo;
@@ -38,16 +44,16 @@ public class TennisMatch implements Match {
         int playerTwoScore = playerTwo.getScore();
         int scoreDiff = Math.abs(playerOneScore - playerTwoScore);
 
-        if (playerOneScore == 0 && playerTwoScore == 0) {
+        if (playerOneScore == LOVE && playerTwoScore == LOVE) {
             return scoreMsg;
         } else {
             scoreMsg = ", ";
-            if (playerOneScore >= 3 && playerTwoScore >= 3) {
+            if (playerOneScore >= THREE_POINTS && playerTwoScore >= THREE_POINTS) {
                 // either deuce or advantage
                 if (scoreDiff == 0) {
-                    scoreMsg += "Deuce";
+                    scoreMsg += DEUCE;
                 } else if (scoreDiff == 1) {
-                    scoreMsg += "Advantage " + getPlayerInLead().getName();
+                    scoreMsg += ADVANTAGE + getPlayerInLead().getName();
                 }
             } else {
                 scoreMsg += SCORE_DESC[playerOneScore] + "-" + SCORE_DESC[playerTwoScore];
@@ -63,9 +69,9 @@ public class TennisMatch implements Match {
         int scoreDiff = Math.abs(playerOneScore - playerTwoScore);
 
         // winning game only by leading 2 points
-        if (scoreDiff == 2) {
+        if (scoreDiff == TWO_POINTS) {
             // at least scored 4 points
-            if (playerOneScore >= 4 || playerTwoScore >= 4) {
+            if (playerOneScore >= FOUR_POINTS || playerTwoScore >= FOUR_POINTS) {
                 Player playerWonGame = getPlayerInLead();
                 playerWonGame.winGameScore();
                 resetGame();
