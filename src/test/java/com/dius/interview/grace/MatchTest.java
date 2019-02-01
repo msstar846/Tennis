@@ -11,11 +11,11 @@ public class MatchTest {
     public void testWholeMatch() {
         Match match = new Match("player 1", "player 2");
 
-//        match.pointWonBy("player 1");
-//        match.pointWonBy("player 2");
-//        assertThat("this will return \"0-0, 15-15\"",
-//                match.score(),
-//                is("0-0, 15-15"));
+        match.pointWonBy("player 1");
+        match.pointWonBy("player 2");
+        assertThat("this will return \"0-0, 15-15\"",
+                match.score(),
+                is("0-0, 15-15"));
 //
 //        match.pointWonBy("player 1");
 //        match.pointWonBy("player 1");
