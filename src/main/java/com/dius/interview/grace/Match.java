@@ -36,9 +36,9 @@ public class Match {
             //either deuce or advantage
             int scoreDiff = player1Score - player2Score;
             if(scoreDiff == 0) {
-                scoreMessage = "Deuce";
+                scoreMessage += "Deuce";
             }else if(scoreDiff == 1) {
-                scoreMessage = "Advantage" + getPlayerInLead();
+                scoreMessage += "Advantage " + getPlayerInLead();
             }
         }else {
             scoreMessage += SCORE_DESC[player1Score] + "-" + SCORE_DESC[player2Score];
