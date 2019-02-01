@@ -29,10 +29,22 @@ public class Match {
     }
 
     public String score() {
+
+        // check if game is won by player
+        if(player1Score >= 4 || player2Score >= 4) {
+            int diff = player1Score - player2Score;
+            if(diff >= 2) {
+                player1GameScore++;
+                resetGame();
+            }else if(diff <= -2) {
+                player2GameScore++;
+            }
+        }
+
         String scoreMessage = player1GameScore + "-" + player2GameScore;
-        scoreMessage += ", ";
 
         if(player1Score >= 3 && player2Score >= 3) {
+            scoreMessage += ", ";
             //either deuce or advantage
             int scoreDiff = player1Score - player2Score;
             if(scoreDiff == 0) {
@@ -40,11 +52,17 @@ public class Match {
             }else if(scoreDiff == 1) {
                 scoreMessage += "Advantage " + getPlayerInLead();
             }
-        }else {
+        }else if(player1Score != 0 && player2Score != 0){
+            scoreMessage += ", ";
             scoreMessage += SCORE_DESC[player1Score] + "-" + SCORE_DESC[player2Score];
         }
 
         return scoreMessage;
+    }
+
+    private void resetGame() {
+        player1Score = 0;
+        player2Score = 0;
     }
 
     private String getPlayerInLead() {
