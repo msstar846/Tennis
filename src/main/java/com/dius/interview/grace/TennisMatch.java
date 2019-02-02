@@ -31,8 +31,6 @@ public class TennisMatch implements Match {
     public String score() {
 
         String gameScoreMsg = getGameScoreMsg();
-        ;
-
         String scoreMsg = getScoreMsg();
 
         return gameScoreMsg + scoreMsg;
@@ -69,7 +67,7 @@ public class TennisMatch implements Match {
         int scoreDiff = Math.abs(playerOneScore - playerTwoScore);
 
         // winning game only by leading 2 points
-        if (scoreDiff == TWO_POINTS) {
+        if (scoreDiff >= TWO_POINTS) {
             // at least scored 4 points
             if (playerOneScore >= FOUR_POINTS || playerTwoScore >= FOUR_POINTS) {
                 Player playerWonGame = getPlayerInLead();

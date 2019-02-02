@@ -8,7 +8,24 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TennisMatchTest {
 
     @Test
-    public void testWholeMatch() {
+    public void testGameWonByOnePlayer() {
+        TennisMatch tennisMatch = new TennisMatch("player 1", "player 2");
+
+        for(int i = 1; i < 24; i++) {
+            tennisMatch.pointWonBy("player 1");
+
+            // player won 4 times in a row win the game
+            if(i % 4 == 0) {
+                String expectScore = String.valueOf(i/4) + "-0";
+                assertThat("this should return game score",
+                        tennisMatch.score(),
+                        is(expectScore));
+            }
+        }
+    }
+
+    @Test
+    public void testGame() {
         TennisMatch tennisMatch = new TennisMatch("player 1", "player 2");
 
         tennisMatch.pointWonBy("player 1");
