@@ -56,6 +56,7 @@ public class TennisMatch implements Match {
         if(setWinnerName != null) {
             setScoreMsg = playerOne.getGameScore() + "-" + playerTwo.getGameScore() + ", ";
             setScoreMsg += setWinnerName + " Won the set!";
+            resetSet();
         }
 
         return setScoreMsg;
