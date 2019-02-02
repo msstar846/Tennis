@@ -30,10 +30,35 @@ public class TennisMatch implements Match {
     @Override
     public String score() {
 
+        String setMsg = getSetMsg();
+        if(setMsg != null) {
+            return setMsg;
+        }
         String gameScoreMsg = getGameScoreMsg();
         String scoreMsg = getScoreMsg();
 
         return gameScoreMsg + scoreMsg;
+    }
+
+    private String getSetMsg() {
+        String setScoreMsg = null;
+        int playerOneScore = playerOne.getGameScore();
+        int playerTwoScore = playerTwo.getGameScore();
+        int scoreDiff = Math.abs(playerOneScore - playerTwoScore);
+        String setWinnerName = null;
+
+        // winning set only by leading 2 games
+        if (scoreDiff >= TWO_POINTS) {
+            if(playerOneScore >= 6) setWinnerName = playerOne.getName();
+            if(playerTwoScore >= 6) setWinnerName = playerTwo.getName();
+        }
+
+        if(setWinnerName != null) {
+            setScoreMsg = playerOne.getGameScore() + "-" + playerTwo.getGameScore() + ", ";
+            setScoreMsg += setWinnerName + " Won the set!";
+        }
+
+        return setScoreMsg;
     }
 
     private String getScoreMsg() {
@@ -84,6 +109,12 @@ public class TennisMatch implements Match {
     private void resetGame() {
         playerOne.resetScore();
         playerTwo.resetScore();
+    }
+
+    private void resetSet() {
+        playerOne.resetGameScore();
+        playerTwo.resetGameScore();
+        resetGame();
     }
 
     private Player getPlayerInLead() {

@@ -11,17 +11,20 @@ public class TennisMatchTest {
     public void testGameWonByOnePlayer() {
         TennisMatch tennisMatch = new TennisMatch("player 1", "player 2");
 
-        for(int i = 1; i < 24; i++) {
+        for(int i = 1; i < 25; i++) {
             tennisMatch.pointWonBy("player 1");
 
             // player won 4 times in a row win the game
             if(i % 4 == 0) {
-                String expectScore = String.valueOf(i/4) + "-0";
+                String expectScore = i/4 + "-0";
                 assertThat("this should return game score",
                         tennisMatch.score(),
                         is(expectScore));
             }
         }
+        assertThat("player 1 won 6 games in a row, therefore win the set",
+                tennisMatch.score(),
+                is("6-0, player 1 Won the set!"));
     }
 
     @Test
