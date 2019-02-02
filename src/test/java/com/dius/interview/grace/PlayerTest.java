@@ -68,4 +68,27 @@ public class PlayerTest {
                 is(0));
     }
 
+    @Test
+    public void canWinSetScore() {
+        assertThat("Player initilized with set score zero",
+                player.getSetScore(),
+                is(0));
+        player.winSetScore();
+        assertThat("Player won 1 set",
+                player.getSetScore(),
+                is(1));
+    }
+
+    @Test
+    public void canResetSetScore() {
+        player.winSetScore();
+        assertThat("Player won 1 set score",
+                player.getSetScore(),
+                is(1));
+        player.resetSetScore();
+        assertThat("Player set score should be reset to zero",
+                player.getSetScore(),
+                is(0));
+    }
+
 }

@@ -4,12 +4,13 @@ public class Player {
     private String name;
     private int score;
     private int gameScore;
-
+    private int setScore;
 
     public Player(String name) {
         this.name = name;
         score = 0;
         gameScore = 0;
+        setScore = 0;
     }
 
     public String getName() {
@@ -38,5 +39,17 @@ public class Player {
 
     public void winGameScore() {
         gameScore++;
+    }
+
+    public int getSetScore() {
+        return setScore;
+    }
+
+    public void winSetScore() {
+        setScore++;
+    }
+
+    public void resetSetScore() {
+        setScore = 0;
     }
 }
