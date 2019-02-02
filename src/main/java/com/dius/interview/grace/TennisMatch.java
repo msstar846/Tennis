@@ -25,6 +25,8 @@ public class TennisMatch implements Match {
         } else {
             playerTwo.winScore();
         }
+        calculateGameScore();
+        calculateSetScore();
     }
 
     @Override
@@ -42,24 +44,32 @@ public class TennisMatch implements Match {
 
     private String getSetMsg() {
         String setScoreMsg = null;
-        int playerOneScore = playerOne.getGameScore();
-        int playerTwoScore = playerTwo.getGameScore();
-        int scoreDiff = Math.abs(playerOneScore - playerTwoScore);
-        String setWinnerName = null;
+        int playerOneSetScore = playerOne.getSetScore();
+        int playerTwoSetScore = playerTwo.getSetScore();
 
-        // winning set only by leading 2 games
-        if (scoreDiff >= TWO_POINTS) {
-            if(playerOneScore >= 6) setWinnerName = playerOne.getName();
-            if(playerTwoScore >= 6) setWinnerName = playerTwo.getName();
-        }
+        if(playerOneSetScore > 0 || playerTwoSetScore > 0) {
+            String setWinnerName = playerOneSetScore > playerTwoSetScore ?
+                    playerOne.getName() : playerTwo.getName();
 
-        if(setWinnerName != null) {
-            setScoreMsg = playerOne.getGameScore() + "-" + playerTwo.getGameScore() + ", ";
-            setScoreMsg += setWinnerName + " Won the set!";
-            resetSet();
+            if(setWinnerName != null) {
+                setScoreMsg = playerOne.getSetScore() + "-" + playerTwo.getSetScore() + ", ";
+                setScoreMsg += setWinnerName + " Won the set!";
+            }
         }
 
         return setScoreMsg;
+    }
+
+    private void calculateSetScore() {
+        int playerOneScore = playerOne.getGameScore();
+        int playerTwoScore = playerTwo.getGameScore();
+        int scoreDiff = Math.abs(playerOneScore - playerTwoScore);
+
+        // winning set only by leading 2 games
+        if (scoreDiff >= TWO_POINTS) {
+            if(playerOneScore >= 6) { playerOne.winSetScore(); resetSet();}
+            if(playerTwoScore >= 6) { playerTwo.winSetScore(); resetSet();}
+        }
     }
 
     private String getScoreMsg() {
@@ -88,6 +98,12 @@ public class TennisMatch implements Match {
     }
 
     private String getGameScoreMsg() {
+        String gameScoreMsg = playerOne.getGameScore() + "-" + playerTwo.getGameScore();
+
+        return gameScoreMsg;
+    }
+
+    private void calculateGameScore() {
         int playerOneScore = playerOne.getScore();
         int playerTwoScore = playerTwo.getScore();
         int scoreDiff = Math.abs(playerOneScore - playerTwoScore);
@@ -101,10 +117,6 @@ public class TennisMatch implements Match {
                 resetGame();
             }
         }
-
-        String gameScoreMsg = playerOne.getGameScore() + "-" + playerTwo.getGameScore();
-
-        return gameScoreMsg;
     }
 
     private void resetGame() {

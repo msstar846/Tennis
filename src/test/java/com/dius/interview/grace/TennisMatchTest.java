@@ -11,7 +11,8 @@ public class TennisMatchTest {
     public void testGameWonByOnePlayer() {
         TennisMatch tennisMatch = new TennisMatch("player 1", "player 2");
 
-        for(int i = 1; i < 25; i++) {
+        // we have setup player 1 to win 5 games up to [5-0, 40-0]
+        for(int i = 1; i < 24; i++) {
             tennisMatch.pointWonBy("player 1");
 
             // player won 4 times in a row win the game
@@ -22,9 +23,11 @@ public class TennisMatchTest {
                         is(expectScore));
             }
         }
+        // one point to win the set
+        tennisMatch.pointWonBy("player 1");
         assertThat("player 1 won 6 games in a row, therefore win the set",
                 tennisMatch.score(),
-                is("6-0, player 1 Won the set!"));
+                is("1-0, player 1 Won the set!"));
     }
 
     @Test
@@ -58,6 +61,23 @@ public class TennisMatchTest {
         assertThat("this will return \"1-0\"",
                 tennisMatch.score(),
                 is("1-0"));
+    }
+
+    @Test
+    public void testTieBreak() {
+        TennisMatch tennisMatch = new TennisMatch("player 1", "player 2");
+
+        // player1 won 5 games
+        for(int i = 1; i < 21; i++) {
+            tennisMatch.pointWonBy("player 1");
+        }
+
+        // player2 won 6 games
+        for(int i = 1; i < 25; i++) {
+            tennisMatch.pointWonBy("player 2");
+        }
+
+        System.out.println(tennisMatch.score());
     }
 
 }
