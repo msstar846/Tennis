@@ -6,12 +6,14 @@ public class TennisMatch implements Match {
     private static final int FOUR_POINTS = 4;
     private static final int THREE_POINTS = 3;
     private static final int TWO_POINTS = 2;
+    private static final int SIX_POINTS = 6;
     private static final int LOVE = 0;
     private static final String DEUCE = "Deuce";
     private static final String ADVANTAGE = "Advantage ";
 
     private Player playerOne;
     private Player playerTwo;
+    private boolean tieBreak = false;
 
     public TennisMatch(String player1, String player2) {
         this.playerOne = new Player(player1);
@@ -21,9 +23,17 @@ public class TennisMatch implements Match {
     @Override
     public void pointWonBy(String player) {
         if (playerOne.getName().equals(player)) {
-            playerOne.winScore();
+            if(tieBreak) {
+                playerOne.winGameScore();
+            }else {
+                playerOne.winScore();
+            }
         } else {
-            playerTwo.winScore();
+            if(tieBreak) {
+                playerTwo.winGameScore();
+            }else {
+                playerTwo.winScore();
+            }
         }
         calculateGameScore();
         calculateSetScore();
@@ -33,7 +43,7 @@ public class TennisMatch implements Match {
     public String score() {
 
         String setMsg = getSetMsg();
-        if(setMsg != null) {
+        if (setMsg != null) {
             return setMsg;
         }
         String gameScoreMsg = getGameScoreMsg();
@@ -47,11 +57,11 @@ public class TennisMatch implements Match {
         int playerOneSetScore = playerOne.getSetScore();
         int playerTwoSetScore = playerTwo.getSetScore();
 
-        if(playerOneSetScore > 0 || playerTwoSetScore > 0) {
+        if (playerOneSetScore > 0 || playerTwoSetScore > 0) {
             String setWinnerName = playerOneSetScore > playerTwoSetScore ?
                     playerOne.getName() : playerTwo.getName();
 
-            if(setWinnerName != null) {
+            if (setWinnerName != null) {
                 setScoreMsg = playerOne.getSetScore() + "-" + playerTwo.getSetScore() + ", ";
                 setScoreMsg += setWinnerName + " Won the set!";
             }
@@ -65,10 +75,19 @@ public class TennisMatch implements Match {
         int playerTwoScore = playerTwo.getGameScore();
         int scoreDiff = Math.abs(playerOneScore - playerTwoScore);
 
-        // winning set only by leading 2 games
-        if (scoreDiff >= TWO_POINTS) {
-            if(playerOneScore >= 6) { playerOne.winSetScore(); resetSet();}
-            if(playerTwoScore >= 6) { playerTwo.winSetScore(); resetSet();}
+        if (playerOneScore == SIX_POINTS && playerTwoScore == SIX_POINTS){
+            tieBreak = true;
+        }else {
+            if (scoreDiff >= TWO_POINTS) {
+                if(playerOneScore >= SIX_POINTS || playerTwoScore >= SIX_POINTS) {
+                    if(playerOneScore > playerTwoScore) {
+                        playerOne.winSetScore();
+                    }else{
+                        playerTwo.winSetScore();
+                    }
+                    resetSet();
+                }
+            }
         }
     }
 

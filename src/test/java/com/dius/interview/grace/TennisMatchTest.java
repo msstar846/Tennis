@@ -64,6 +64,25 @@ public class TennisMatchTest {
     }
 
     @Test
+    public void testWinningASet() {
+        TennisMatch tennisMatch = new TennisMatch("player 1", "player 2");
+
+        // player1 won 5 games
+        for(int i = 1; i < 21; i++) {
+            tennisMatch.pointWonBy("player 1");
+        }
+
+        // player2 won 7 games
+        for(int i = 1; i < 29; i++) {
+            tennisMatch.pointWonBy("player 2");
+        }
+
+        assertThat("player 2 won 7 games by a margin of 2",
+                tennisMatch.score(),
+                is("0-1, player 2 Won the set!"));
+    }
+
+    @Test
     public void testTieBreak() {
         TennisMatch tennisMatch = new TennisMatch("player 1", "player 2");
 
@@ -77,7 +96,31 @@ public class TennisMatchTest {
             tennisMatch.pointWonBy("player 2");
         }
 
-        System.out.println(tennisMatch.score());
+        // player1 won one more game, tie break
+        for(int i = 1; i < 5; i++) {
+            tennisMatch.pointWonBy("player 1");
+        }
+
+        // print out game score
+        assertThat("tie break",
+                tennisMatch.score(),
+                is("6-6"));
+
+        tennisMatch.pointWonBy("player 1");
+        tennisMatch.pointWonBy("player 2");
+
+        // print out game score
+        assertThat("still remain tie break",
+                tennisMatch.score(),
+                is("7-7"));
+
+        tennisMatch.pointWonBy("player 2");
+        tennisMatch.pointWonBy("player 2");
+
+        // print out set score
+        assertThat("player 2 won 2 more games",
+                tennisMatch.score(),
+                is("0-1, player 2 Won the set!"));
     }
 
 }
