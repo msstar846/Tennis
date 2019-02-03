@@ -12,12 +12,12 @@ public class TennisMatchTest {
         TennisMatch tennisMatch = new TennisMatch("player 1", "player 2");
 
         // we have setup player 1 to win 5 games up to [5-0, 40-0]
-        for(int i = 1; i < 24; i++) {
+        for (int i = 1; i < 24; i++) {
             tennisMatch.pointWonBy("player 1");
 
             // player won 4 times in a row win the game
-            if(i % 4 == 0) {
-                String expectScore = i/4 + "-0";
+            if (i % 4 == 0) {
+                String expectScore = i / 4 + "-0";
                 assertThat("this should return game score",
                         tennisMatch.score(),
                         is(expectScore));
@@ -68,12 +68,12 @@ public class TennisMatchTest {
         TennisMatch tennisMatch = new TennisMatch("player 1", "player 2");
 
         // player1 won 5 games
-        for(int i = 1; i < 21; i++) {
+        for (int i = 1; i < 21; i++) {
             tennisMatch.pointWonBy("player 1");
         }
 
         // player2 won 7 games
-        for(int i = 1; i < 29; i++) {
+        for (int i = 1; i < 29; i++) {
             tennisMatch.pointWonBy("player 2");
         }
 
@@ -87,17 +87,17 @@ public class TennisMatchTest {
         TennisMatch tennisMatch = new TennisMatch("player 1", "player 2");
 
         // player1 won 5 games
-        for(int i = 1; i < 21; i++) {
+        for (int i = 1; i < 21; i++) {
             tennisMatch.pointWonBy("player 1");
         }
 
         // player2 won 6 games
-        for(int i = 1; i < 25; i++) {
+        for (int i = 1; i < 25; i++) {
             tennisMatch.pointWonBy("player 2");
         }
 
         // player1 won one more game, tie break
-        for(int i = 1; i < 5; i++) {
+        for (int i = 1; i < 5; i++) {
             tennisMatch.pointWonBy("player 1");
         }
 

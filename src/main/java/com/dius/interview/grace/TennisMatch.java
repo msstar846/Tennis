@@ -3,11 +3,13 @@ package com.dius.interview.grace;
 public class TennisMatch implements Match {
 
     private static final String[] SCORE_DESC = {"0", "15", "30", "40"};
-    private static final int FOUR_POINTS = 4;
-    private static final int THREE_POINTS = 3;
-    private static final int TWO_POINTS = 2;
-    private static final int SIX_POINTS = 6;
+
     private static final int LOVE = 0;
+    private static final int TWO_POINTS = 2;
+    private static final int THREE_POINTS = 3;
+    private static final int FOUR_POINTS = 4;
+    private static final int SIX_POINTS = 6;
+
     private static final String DEUCE = "Deuce";
     private static final String ADVANTAGE = "Advantage ";
 
@@ -23,15 +25,15 @@ public class TennisMatch implements Match {
     @Override
     public void pointWonBy(String player) {
         if (playerOne.getName().equals(player)) {
-            if(tieBreak) {
+            if (tieBreak) {
                 playerOne.winGameScore();
-            }else {
+            } else {
                 playerOne.winScore();
             }
         } else {
-            if(tieBreak) {
+            if (tieBreak) {
                 playerTwo.winGameScore();
-            }else {
+            } else {
                 playerTwo.winScore();
             }
         }
@@ -75,14 +77,14 @@ public class TennisMatch implements Match {
         int playerTwoScore = playerTwo.getGameScore();
         int scoreDiff = Math.abs(playerOneScore - playerTwoScore);
 
-        if (playerOneScore == SIX_POINTS && playerTwoScore == SIX_POINTS){
+        if (playerOneScore == SIX_POINTS && playerTwoScore == SIX_POINTS) {
             tieBreak = true;
-        }else {
+        } else {
             if (scoreDiff >= TWO_POINTS) {
-                if(playerOneScore >= SIX_POINTS || playerTwoScore >= SIX_POINTS) {
-                    if(playerOneScore > playerTwoScore) {
+                if (playerOneScore >= SIX_POINTS || playerTwoScore >= SIX_POINTS) {
+                    if (playerOneScore > playerTwoScore) {
                         playerOne.winSetScore();
-                    }else{
+                    } else {
                         playerTwo.winSetScore();
                     }
                     resetSet();
